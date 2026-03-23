@@ -8,6 +8,7 @@ const notePopup = document.getElementById("notePopup");
 const noteInput = document.getElementById("noteInput");
 const saveNote = document.getElementById("saveNote");
 const closeNote = document.getElementById("closeNote");
+const clearAllNotes = document.getElementById("clearAllNotes");
 
 let currentDate = new Date();
 let selectedDate = "";
@@ -98,6 +99,27 @@ saveNote.addEventListener("click", () => {
 /* close popup */
 closeNote.addEventListener("click", () => {
   notePopup.style.display = "none";
+});
+
+/* escape key closes popup */
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    notePopup.style.display = "none";
+  }
+});
+
+/* clear all saved notes with a aleart */
+clearAllNotes.addEventListener("click", () => {
+  if (Object.keys(notes).length === 0) {
+    alert("No notes found to clear.");
+    return;
+  }
+  if (confirm("Delete all saved notes?")) {
+    notes = {};
+    localStorage.removeItem("calendarNotes");
+    renderCalendar();
+    alert("All notes cleared.");
+  }
 });
 
 /* previous month */
